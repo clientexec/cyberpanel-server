@@ -45,6 +45,12 @@ class CyberAPI
         $result = curl_exec($ch);
         CE_Lib::log(4, 'CyberPanel Response: ');
         CE_Lib::log(4, $result);
+
+
+        if (curl_errno($ch)) {
+            throw new CE_Exception('Connection error: ' . curl_error($ch));
+        }
+
         curl_close($ch);
         $result = json_decode($result, true);
         if (isset($result['error_message']) && $result['error_message'] != '' && $result['error_message'] != 'None') {
